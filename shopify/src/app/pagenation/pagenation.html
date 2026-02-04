@@ -1,0 +1,38 @@
+<div class="pagination" *ngIf="totalPages > 1">
+  <!-- Previous Button -->
+  <button 
+    class="prev-btn"
+    (click)="goToPreviousPage()" 
+    [disabled]="currentPage === 1"
+    title="Previous page">
+    ← Prev
+  </button>
+
+  <!-- Smart Page Numbers with Ellipsis -->
+  @for (page of visiblePages; track $index) {
+    @if (page === '...') {
+      <span class="ellipsis" title="More pages">...</span>
+    } @else {
+      <button 
+        (click)="changePage(page)"
+        [class.active]="currentPage === page"
+        [title]="'Go to page ' + page"
+        class="page-btn">
+        {{ page }}
+      </button>
+    }
+  }
+
+  <!-- Next Button -->
+  <button 
+    class="next-btn"
+    (click)="goToNextPage()" 
+    [disabled]="currentPage === totalPages"
+    title="Next page">
+    Next →
+  </button>
+
+  <!-- Page Info -->
+  <span class="page-info">
+    Page {{ currentPage }} of {{ totalPages }}
+  </span>

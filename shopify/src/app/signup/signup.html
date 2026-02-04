@@ -1,0 +1,82 @@
+<form [formGroup]="signUpForm" (ngSubmit)="submitForm()">
+    <div class="container">
+        <h2  class="signup-header">Sign Up</h2>
+        <div>
+            <label>First Name</label>
+            <input type="text" formControlName="firstname" placeholder="First name">
+            @if (signUpForm.get('firstname')?.invalid && signUpForm.get('firstname')?.touched){
+            <p class="error">
+                @if(signUpForm.get('firstname')?.errors?.['required']){
+                <span>Please fill in the first name</span>
+                }
+                @if(signUpForm.get('firstname')?.errors?.['hasSpace']){
+                <span>Space is not allowed</span>
+                }
+            </p>
+            }
+        </div>
+
+        <div>
+            <label>Second name</label>
+            <input type="text" formControlName="secondname" placeholder="Second name">
+            @if (signUpForm.get('secondname')?.invalid && signUpForm.get('secondname')?.touched){
+            <p class="error">
+                @if(signUpForm.get('secondname')?.errors?.['required']){
+                <span>Please fill in the second name</span>
+                }
+                @if(signUpForm.get('secondname')?.errors?.['hasSpace']){
+                <span>Space is not allowed</span>
+                }
+            </p>
+            }
+        </div>
+
+        <div>
+            <label>Gender</label>
+            <select formControlName="gender">
+                <option value="">Select</option>
+                <option value="male">M</option>
+                <option value="female">F</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Age</label>
+            <input type="text" formControlName="age">
+            @if(signUpForm.get('age')?.invalid && signUpForm.get('age')?.touched){
+            <p class="error">
+                @if(signUpForm.get('age')?.errors?.['required']){
+                <span>Please fill in your age</span>
+                }
+            </p>
+
+            }
+        </div>
+
+        <div>
+            <label>Email</label>
+            <input type="email" formControlName="email" placeholder="E-mail">
+        </div>
+
+        <div>
+            <h4>Password:</h4>
+            <label class="password">Create a password</label>
+            <input type="password" placeholder="password" formControlName="password">
+
+            <label class="password">Confirm password</label>
+            <input type="password" placeholder="Re-enter password" formControlName="confirmpassword">
+        </div>
+
+
+        <div class="submitbutton">
+            <button type="submit" [disabled]="signUpForm.invalid">Submit</button>
+        </div>
+
+        <p class="login-text">
+            <a routerLink="/">Go back to login</a>
+        </p>
+
+
+
+    </div>
+</form>

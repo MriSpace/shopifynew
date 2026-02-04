@@ -1,0 +1,54 @@
+<!-- <div class="product-page">
+  @if(loading) {
+    <p>Loading products...</p>
+  } @else if(error) {
+    <p>{{ error }}</p>
+  } @else {
+    <div class="products-grid">
+      @for(product of products; track product.id) {
+        <div class="product-card">
+          <img [src]="product.thumbnail" [alt]="product.title" class="product-image">
+          <h3>{{ product.title }}</h3>
+          <p class="description">{{ product.description }}</p>
+          <p class="price">${{ product.price }}</p>
+          <p class="rating">Rating: {{ product.rating }}</p>
+          <button>View Details</button>
+        </div>
+      }
+    </div>
+  }
+</div> -->
+
+<div class="product-page">
+    @if (loading) {
+    <p class="loading-text">Loading products...</p>
+    } @else if (error) {
+    <p class="error-text">{{ error }}</p>
+    } @else {
+    <div class="products-grid">
+        @for (product of filteredProducts; track product.id) {
+        <div class="product-card">
+            <img [src]="product.thumbnail" [alt]="product.title" class="product-image">
+            <h3>{{ product.title }}</h3>
+            <p class="description">{{ product.description }}</p>
+            <p class="price">{{ product.price | currencypipe}}</p>
+            <p class="rating">Rating: {{ product.rating }}</p>
+            <div class="product-actions">
+              <button [routerLink]="`/product/${product.id}`" class="btn-details">View Details</button>
+              <button (click)="addToCart(product)" class="btn-cart">Add to Cart</button>
+            </div>
+        </div>
+        }
+        <app-pagenation [products]="products" [currentPage]="currentPage" (pageChange)="onPageChange($event)">
+        </app-pagenation>
+    </div>
+
+    </div>
+        <ms-pagination-component [itemsPerPage]="3" [itemlength]="products.length" [currentPage]="currentPage" (pageChange)="onPageChange($event)">
+        </ms-pagination-component>
+
+    }
+
+
+
+</div>

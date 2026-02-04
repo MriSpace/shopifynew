@@ -1,0 +1,156 @@
+/* Container */
+.container {
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 24px 28px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Form fields spacing */
+.container>div {
+    margin-bottom: 18px;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Inputs & Select */
+input {
+    width: 90%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select {
+    width: 96%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+}
+
+/* Focus state */
+input:focus,
+select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* Invalid & touched (Angular adds these classes) */
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+    border-color: #dc2626;
+}
+
+/* Error message */
+.error {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #dc2626;
+}
+
+/* Submit button container */
+.submitbutton {
+    text-align: center;
+    margin-top: 24px;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #4f46e5;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+/* Hover */
+button:hover:not(:disabled) {
+    background: #4338ca;
+    transform: translateY(-1px);
+}
+
+/* Disabled state */
+button:disabled {
+    background: #a5b4fc;
+    cursor: not-allowed;
+}
+
+/* Small screens */
+/* @media (max-width: 480px) {
+  .container {
+    margin: 20px;
+    padding: 20px;
+  } */
+
+.password {
+    display: block;
+    margin-bottom: 11px;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 12px;
+  margin: 12px;
+
+  background-color: #ffffff;
+  color: #333;
+
+  border: 1px solid #dcdcdc;
+  border-radius: 100px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+  width: fit-content;
+
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn:hover:not(:disabled) {
+    background: #5adfe6;
+    transform: translateY(-1px);
+}
+
+
+.login-text{
+    text-align: center;
+}
+
+.signup-header{
+    text-align: center;
+}

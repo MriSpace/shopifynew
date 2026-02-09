@@ -6,6 +6,7 @@ import { CurrencypipePipe } from '../pipes/currencypipe-pipe';
 import { HeaderComponent } from '../header/header';
 import { Auth } from '../common/services/auth';
 import { CartService } from '../common/services/cart.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'ms-product-details-component',
@@ -20,17 +21,17 @@ export class ProductDetailsComponent implements OnInit{
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private auth: Auth, private cartService: CartService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUserInfo();
     const id = this.route.snapshot.paramMap.get('productId');
-    this.http.get(`https://dummyjson.com/products/${id}`)
+    this.http.get(`${environment.apiUrl}/products/${id}`)
       .subscribe((data) => {
         this.product = data;
         this.loading = false;
       });
   }
 
-  getUserInfo() {
+  getUserInfo(): void {
     this.auth.getUser().subscribe((res: any) => {
       this.user = res;
     }, error => {

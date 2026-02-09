@@ -16,7 +16,7 @@ export class HeaderComponent {
 
   constructor(private router: Router, private auth: Auth, public cartService: CartService) { }
 
-  logout() {
+  logout(): void {
     this.auth.logout(); //  remove token + user from storage
     this.router.navigate(['/login'], { replaceUrl: true });
   }

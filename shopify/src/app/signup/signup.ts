@@ -30,7 +30,7 @@ export class SignupComponent {
 
 
 
-  submitForm() {
+  submitForm(): void {
     const firstname = this.signUpForm.get('firstname')?.value;
     const secondname = this.signUpForm.get('secondname')?.value;
 

@@ -25,7 +25,7 @@ export class LoginComponent {
   private auth = inject(Auth);  //different way of using a constructor
 
 
-  submitForm() {
+  submitForm(): void {
   if (this.myForm.invalid) return;
 
   const username = this.myForm.value.username!;  //non-null assertion operator - tells angular that a value will definitely be returned

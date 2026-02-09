@@ -5,13 +5,13 @@ import { Injectable } from '@angular/core';
 })
 export class UserStorage {
 
-  saveUsername(username: string){
+  saveUsername(username: string): void {
     let users = JSON.parse(localStorage.getItem('users')||'[]');
     users.push(username);
     localStorage.setItem('users',JSON.stringify(users));
   }
 
-  getUsernames(){
+  getUsernames(): any[] {
     return JSON.parse(localStorage.getItem('users')||'[]');
   }
   

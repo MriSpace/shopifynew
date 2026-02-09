@@ -1,13 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HeaderComponent } from '../header/header';
-import { ProductViewComponent } from '../product-view/product-view';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { Auth } from '../common/services/auth';
 import { Router } from '@angular/router';
+import { ProductView } from '../product-view/product-view';
+import { ProductsService } from '../common/services/products.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ms-home-component',
-  imports: [HeaderComponent, ProductViewComponent],
+  imports: [HeaderComponent,ProductView ],
   templateUrl: './home.html',
   styleUrl: './home.css',
   standalone: true
@@ -15,12 +17,15 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
   user: any = {}
   name: string = 'test'
+  products: any[] = [];
+  loading: boolean = true;
+  error: string | null = null;
   private destroy$ = new Subject<void>();
 
-  constructor(private auth: Auth, public route: Router) {}
+  constructor(private auth: Auth, public route: Router, private productsService: ProductsService) {}
 
   ngOnInit() {
-    this.getUserInfo();
+    this.loadData();
   }
 
   ngOnDestroy() {
@@ -28,15 +33,34 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getUserInfo() {
-    this.auth.getUser().subscribe((res: any) => {
-      console.log(res)
-      this.user = res;
-      this.name = res.firstName;
-    }, error => {
-      console.log(error)
-      this.user = {};
-      this.route.navigate(['/login'])
+  loadData(): void {
+    this.loading = true;
+    forkJoin({
+      user: this.auth.getUser(),
+      products: this.productsService.getProducts()
     })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (result: any) => {
+          console.log('API responses:', result);
+          
+          // Handle user data
+          this.user = result.user || {};
+          this.name = result.user?.firstName || 'test';
+          
+          // Handle products data
+          this.products = result.products?.products || [];
+          
+          this.loading = false;
+          this.error = null;
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+          this.error = 'Failed to load data';
+          this.loading = false;
+          this.user = {};
+          this.route.navigate(['/login']);
+        }
+      );
   }
 }

@@ -8,33 +8,76 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,  } fr
   styleUrl: './pagenation.css',
   standalone: true
 })
-export class Pagenation implements OnChanges  {
+export class Pagination implements OnChanges  {
   
   @Input() itemlength: number = 0;
-  @Output() pageChange = new EventEmitter<any>();
+  @Input() products: any[] = [];
+  @Output() pageChange = new EventEmitter<any[]>();
 
   @Input() currentPage: number = 1;
-  @Input() itemsPerPage = 10;
-  @Input() products: any[] = [];
+  @Input() itemsPerPage = 3;
   
   totalPages: number = 0;
   visiblePages: (number | string)[] = [];
-  private readonly siblingsCount = 1; // Pages to show around current page
+  private readonly siblingsCount = 1;
 
-  @Input() currentPage!: number;
-  itemsPerPage = 10;
   ngOnChanges(changes: SimpleChanges): void {
-    this.changePage(this.currentPage)
+    this.calculateTotalPages();
+    this.generateVisiblePages();
+    this.changePage(this.currentPage);
+  }
+
+  calculateTotalPages(): void {
+    this.totalPages = Math.ceil(this.itemlength / this.itemsPerPage);
+  }
+
+  generateVisiblePages(): void {
+    const pages: (number | string)[] = [];
+    const maxVisible = 5;
+    
+    if (this.totalPages <= maxVisible) {
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      let startPage = Math.max(1, this.currentPage - this.siblingsCount);
+      let endPage = Math.min(this.totalPages, this.currentPage + this.siblingsCount);
+
+      if (this.currentPage <= this.siblingsCount + 1) {
+        endPage = maxVisible - 1;
+      } else if (this.currentPage >= this.totalPages - this.siblingsCount) {
+        startPage = this.totalPages - maxVisible + 2;
+      }
+
+      if (startPage > 1) {
+        pages.push(1);
+        if (startPage > 2) pages.push('...');
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      if (endPage < this.totalPages) {
+        if (endPage < this.totalPages - 1) pages.push('...');
+        pages.push(this.totalPages);
+      }
+    }
+
+    this.visiblePages = pages;
   }
   
-  changePage(page: number) {
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    
     this.currentPage = page;
-    this.visiblePages = this.getVisiblePages();
+    this.generateVisiblePages();
 
     const start = (page - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
+    const end = Math.min(start + this.itemsPerPage, this.itemlength);
 
-    this.pageChange.emit({ start: start, end: end, page: page });
+    const pageProducts = this.products.slice(start, end);
+    this.pageChange.emit(pageProducts);
   }
 
   goToPreviousPage(): void {

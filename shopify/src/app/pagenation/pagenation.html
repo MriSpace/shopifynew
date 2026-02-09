@@ -14,7 +14,7 @@
       <span class="ellipsis" title="More pages">...</span>
     } @else {
       <button 
-        (click)="changePage(page)"
+        (click)="changePage(+page)"
         [class.active]="currentPage === page"
         [title]="'Go to page ' + page"
         class="page-btn">

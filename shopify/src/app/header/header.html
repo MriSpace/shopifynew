@@ -1,0 +1,20 @@
+
+<header class="header">
+    <!-- <h1>my website</h1> -->
+
+    <div class="left">
+        <span class="logo" routerLink="/" style="cursor: pointer;">Shopify</span>
+    </div>
+
+    <div class="right">
+        <a routerLink="/cart" class="cart-link">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-count" *ngIf="cartService.totalItems() > 0">
+                {{ cartService.totalItems() }}
+            </span>
+        </a>
+        <button class="logout" (click)="logout()">Logout</button>
+        <span class="welcomemsg">Welcome, {{user?.firstName}} {{user?.lastName}} </span>
+        <img class="avatar" [src]="user?.image"/>
+    </div>
+</header>

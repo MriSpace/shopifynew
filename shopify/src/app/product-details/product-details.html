@@ -1,0 +1,127 @@
+<ms-header-component [user]="user"></ms-header-component>
+
+<div class="product-details-container" *ngIf="!loading && product">
+  <div class="product-header">
+    <h1>{{ product.title }}</h1>
+    <div class="product-meta">
+      <span class="category">{{ product.category }}</span>
+      <span class="brand">{{ product.brand }}</span>
+    </div>
+  </div>
+
+  <div class="product-main">
+    <!-- Images Section -->
+    <div class="images-section">
+      <div class="main-image">
+        <img [src]="product.images?.[0] || product.thumbnail" [alt]="product.title" />
+      </div>
+      <div class="thumbnail-gallery" *ngIf="product.images">
+        <img *ngFor="let img of product.images" [src]="img" [alt]="product.title" class="thumbnail" />
+      </div>
+    </div>
+
+    <!-- Details Section -->
+    <div class="details-section">
+      <!-- Price Section -->
+      <div class="price-section">
+        <div class="price">
+          <span class="current-price">{{ product.price | currencypipe}}</span>
+          <span class="discount" *ngIf="product.discountPercentage">
+            -{{ product.discountPercentage }}%
+          </span>
+        </div>
+        <div class="rating">
+          <span class="stars">★ {{ product.rating }}/5</span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p class="description">{{ product.description }}</p>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <div class="info-row">
+          <span class="label">Availability:</span>
+          <span class="value">{{ product.availabilityStatus }}</span>
+        </div>
+        <div class="info-row" *ngIf="product.stock">
+          <span class="label">Stock:</span>
+          <span class="value">{{ product.stock }} units</span>
+        </div>
+        <div class="info-row" *ngIf="product.minimumOrderQuantity">
+          <span class="label">Minimum Order:</span>
+          <span class="value">{{ product.minimumOrderQuantity }} units</span>
+        </div>
+        <div class="info-row" *ngIf="product.warrantyInformation">
+          <span class="label">Warranty:</span>
+          <span class="value">{{ product.warrantyInformation }}</span>
+        </div>
+        <div class="info-row" *ngIf="product.shippingInformation">
+          <span class="label">Shipping:</span>
+          <span class="value">{{ product.shippingInformation }}</span>
+        </div>
+        <div class="info-row" *ngIf="product.returnPolicy">
+          <span class="label">Return Policy:</span>
+          <span class="value">{{ product.returnPolicy }}</span>
+        </div>
+      </div>
+
+      <!-- Dimensions -->
+      <div class="dimensions" *ngIf="product.dimensions">
+        <h3>Dimensions</h3>
+        <div class="info-row">
+          <span class="label">Width:</span>
+          <span class="value">{{ product.dimensions.width }}cm</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Height:</span>
+          <span class="value">{{ product.dimensions.height }}cm</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Depth:</span>
+          <span class="value">{{ product.dimensions.depth }}cm</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn-primary" (click)="addToCart()">Add to Cart</button>
+        <button class="btn-secondary">Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="reviews-section" *ngIf="product.reviews && product.reviews.length > 0">
+    <h2>Customer Reviews</h2>
+    <div class="reviews-list">
+      <div class="review-card" *ngFor="let review of product.reviews">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <span class="reviewer-name">{{ review.reviewerName }}</span>
+            <span class="review-rating">★ {{ review.rating }}/5</span>
+          </div>
+          <span class="review-date">{{ review.date | date: 'short' }}</span>
+        </div>
+        <p class="review-comment">{{ review.comment }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKU and Meta Info -->
+  <div class="meta-info" *ngIf="product.sku || product.weight">
+    <h3>Product Information</h3>
+    <div class="info-row" *ngIf="product.sku">
+      <span class="label">SKU:</span>
+      <span class="value">{{ product.sku }}</span>
+    </div>
+    <div class="info-row" *ngIf="product.weight">
+      <span class="label">Weight:</span>
+      <span class="value">{{ product.weight }}g</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading">
+  <p>Loading product details...</p>
+</div>

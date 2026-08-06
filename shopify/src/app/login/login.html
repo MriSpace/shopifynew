@@ -1,0 +1,90 @@
+<div class="homepage">
+
+    <div class="left">
+        <h1 class="logo">Shopify</h1>
+        <p class="tagline">Simple. Fast. Secure shopping.</p>
+    </div>
+
+
+
+
+
+    <div class="right">
+        
+        <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+            <div class="container">
+               <h2 class="login-heading">Login to Your Account</h2>
+
+                <!--USERNAME-->
+                <div>
+                    <label>Username</label>
+                    <input type="text" formControlName="username">
+                    @if (myForm.get('username')?.invalid && myForm.get('username')?.touched){
+                    <p class="error">
+                        @if(myForm.get('username')?.errors?.['required']){
+                        <span>Username is required</span>
+                        }
+
+                        @if(myForm.get('username')?.errors?.['minlength']){
+                        <span>Username must have atleast 8 characters</span>
+                        }
+
+                        @else if(myForm.get('username')?.errors?.['pattern']){
+                        <span>Username must have atleast 1 number and 1 special character</span>
+                        }
+                    </p>
+                    }
+                </div>
+
+
+                <!--EMAIL-->
+                <!-- <div>
+            <label>Email</label>
+            <input type="email" formControlName="email">
+            @if(myForm.get('email')?.invalid && myForm.get('email')?.touched){
+            <p class="error">
+                @if(myForm.get('email')?.errors?.['required']){
+                <span>Email is required</span>
+                }
+
+                @if(myForm.get('email')?.errors?.['email']){
+                <span>Enter a valid email</span>
+                }
+            </p>
+            }
+        </div> -->
+
+                <!--PASSWORD-->
+                <div>
+                    <label>Password</label>
+                    <input type="password" formControlName="password">
+                    @if(myForm.get('password')?.invalid && myForm.get('password')?.touched){
+                    <p class="error">
+                        @if(myForm.get('password')?.errors?.['required']){
+                        <span>Password is required</span>
+                        }
+
+                        <!-- @if(myForm.get('password')?.['passwordMismatch']){
+                <span>incorrect password</span>
+                } -->
+                    </p>
+                    }
+
+                </div>
+
+                <div class="submitbutton">
+                    <button type="submit" [disabled]="myForm.invalid" >Submit</button>
+                </div>
+
+               
+                <p class="signup-text">
+                    Don't have an account yet?
+                <a routerLink="/signup"> Sign up here</a></p>
+
+
+
+            </div>
+
+        </form>
+    </div>
+</div>
